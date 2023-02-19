@@ -105,4 +105,42 @@ router.post("/login",(req, res , next)=>{
 //SIGN IN ROUTES
 //-------------------------------
 
+
+//---------------------------------
+// PUT ROUTE
+//--------------------------------
+ router.post('/user-info', authenticate , (req, res) =>{
+
+    if( req.body == undefined || req.body.email == undefined    
+        ){
+        return res.status(401).json({"message":"unauthorized request"})
+    }
+    var updateData = {};
+
+    if(req.body && req.body.dateOfBirth){
+        updateData.dateOfBirth = req.body.dateOfBirth
+    }
+
+    if(req.body && req.body.addictionCategory){
+        updateData.addictionCategory = req.body.addictionCategory
+    }
+   
+
+
+    User.findOneAndUpdate( { email : req.body.email },
+                           { $set : updateData },
+                           {new : true},
+                           (err , doc) =>{
+
+        if(doc == null || doc == undefined || err){
+            console.log(err)
+            return res.status(404).json(err)
+        }else{
+            return res.json(doc)
+        }            
+
+    } )       
+   
+    
+})
 module.exports = router;

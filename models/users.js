@@ -32,6 +32,13 @@ var UserSchema =new mongoose.Schema({
                 message : '{value} is not a valid email'
             }
         },
+        dateOfBirth:{
+            type : Date,
+            max : new Date()
+        },
+        addictionCategory:[{
+            type : Number
+        }] ,
         password:{
             type: String ,
             require : true , 
