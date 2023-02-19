@@ -125,6 +125,9 @@ router.post("/login",(req, res , next)=>{
         updateData.addictionCategory = req.body.addictionCategory
     }
    
+    if(updateData === {}){
+        return res.status(404).json(err)
+    }
 
 
     User.findOneAndUpdate( { email : req.body.email },
